@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="darkest">#252525</color>
+    <color name="darker">#1D2323</color>
+    <color name="dark">#323232</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="whiter">#F9F9F9</color>
+    <color name="whitest">#F4F9F9</color>
+    <color name="light">#EFF8FF</color>
+    <color name="orange">#FF8243</color>
+    <color name="reddish">#FF2626</color>
+</resources>
