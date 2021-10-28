@@ -62,7 +62,7 @@
             android:layout_marginTop="50dp"
             android:text="Shop"
             android:textColor="@color/darkest"
-            android:textSize="25sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <androidx.cardview.widget.CardView
@@ -75,7 +75,7 @@
             app:cardCornerRadius="8dp"
             android:elevation="10dp"
             android:layout_below="@id/shop_title"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             >
 
@@ -112,11 +112,11 @@
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="150dp"
-                        android:layout_height="40dp"
+                        android:layout_height="48dp"
                         android:layout_margin="8dp"
                         android:background="@drawable/outline"
-                        android:text="View Kit"
                         android:letterSpacing="0.08"
+                        android:text="View Kit"
                         android:textAllCaps="false"
                         android:textStyle="bold" />
 
