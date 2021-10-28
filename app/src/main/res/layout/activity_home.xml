@@ -1,33 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whiter"
     tools:context=".Home">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Home"
-        android:textSize="30sp"
-        android:textColor="@color/darkest"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingBottom="20dp">
 
-    <Button
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Logout"
-        android:onClick="Logout"
-        android:background="@drawable/rounded"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:ignore="OnClick" />
+        <TextView
+            android:id="@+id/app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="18dp"
+            android:text="@string/app_name"
+            android:textColor="@color/darkest"
+            android:textSize="24sp"
+            android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/app_name"
+            android:layout_marginStart="20dp"
+            android:text="@string/company_name"
+            android:textColor="@color/dark"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:rotationY="180"
+            android:src="@drawable/profile" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:layout_toStartOf="@+id/profile"
+            android:rotationY="180"
+            android:src="@drawable/shopping_cart" />
+
+        <TextView
+            android:id="@+id/shop_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/company_name"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:text="Shop"
+            android:textColor="@color/darkest"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/drone_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:cardCornerRadius="8dp"
+            android:elevation="10dp"
+            android:layout_below="@id/shop_title"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:id="@+id/drone_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/drones" />
+
+                <TextView
+                    android:id="@+id/drone_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/drone_image"
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+                    android:text="Hobby Drone Kit"
+                    android:textColor="@color/darkest"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/drone_title"
+                    android:paddingBottom="5dp"
+                    android:gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/outline"
+                        android:text="View Kit"
+                        android:letterSpacing="0.08"
+                        android:textAllCaps="false"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:padding="10dp"
+                        android:text="Buy Now"
+                        android:textAllCaps="false"
+                        android:textColor="@color/whiter" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/rc_play_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:cardCornerRadius="8dp"
+            android:elevation="10dp"
+            android:layout_below="@id/drone_card"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <ImageView
+                    android:id="@+id/rc_plane_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/planes" />
+
+                <TextView
+                    android:id="@+id/rc_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rc_plane_image"
+                    android:gravity="center"
+                    android:paddingTop="6dp"
+                    android:text="RC Plane Kit"
+                    android:textColor="@color/darkest"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rc_title"
+                    android:paddingBottom="5dp"
+                    android:gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/outline"
+                        android:text="View Kit"
+                        android:letterSpacing="0.08"
+                        android:textAllCaps="false"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:padding="10dp"
+                        android:text="Buy Now"
+                        android:textAllCaps="false"
+                        android:textColor="@color/whiter" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+        </androidx.cardview.widget.CardView>
+
+    </RelativeLayout>
+
+</ScrollView>
