@@ -14,6 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HobbyMart">
         <activity
+            android:name=".Profile"
+            android:exported="false" />
+        <activity
+            android:name=".Cart"
+            android:exported="false" />
+        <activity
             android:name=".VerifyPassword"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -22,7 +28,7 @@
             android:name=".Signup"
             android:exported="false"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity"/>
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Home"
             android:exported="false"
@@ -38,7 +44,6 @@
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

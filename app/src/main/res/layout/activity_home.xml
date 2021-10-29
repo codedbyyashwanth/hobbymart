@@ -44,11 +44,15 @@
             >
 
             <ImageView
+                android:id="@+id/cart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="10dp"
+                android:padding="10dp"
+                android:onClick="AddToCart"
                 android:rotationY="180"
-                android:src="@drawable/shopping_cart" />
+                android:src="@drawable/shopping_cart"
+                tools:ignore="UsingOnClickInXml" />
 
             <ImageView
                 android:id="@+id/profile"
@@ -56,7 +60,9 @@
                 android:layout_height="50dp"
                 android:layout_marginEnd="20dp"
                 android:rotationY="180"
-                android:src="@drawable/profile" />
+                android:onClick="Profile"
+                android:src="@drawable/profile"
+                tools:ignore="OnClick" />
 
         </LinearLayout>
 
