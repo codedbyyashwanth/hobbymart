@@ -91,21 +91,22 @@
             android:padding="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:rotationY="180"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:rotationY="180"
                 app:srcCompat="@drawable/shopping_cart" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="4dp"
                 android:letterSpacing="0.1"
                 android:text="View Cart"
                 android:textColor="@color/darker"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -131,21 +132,22 @@
             android:padding="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:rotationY="180"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:rotationY="180"
                 app:srcCompat="@drawable/orders" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="4dp"
                 android:letterSpacing="0.1"
                 android:text="Your Orders"
                 android:textColor="@color/darker"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -171,21 +173,22 @@
             android:padding="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:rotationY="180"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:rotationY="180"
                 app:srcCompat="@drawable/location" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="4dp"
                 android:letterSpacing="0.1"
                 android:text="Add Address"
                 android:textColor="@color/darker"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -211,21 +214,22 @@
             android:padding="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:rotationY="180"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:rotationY="180"
                 app:srcCompat="@drawable/setting" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="4dp"
                 android:letterSpacing="0.1"
                 android:text="Settings"
                 android:textColor="@color/darker"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -250,21 +254,22 @@
             android:padding="15dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:rotationY="180"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:rotationY="180"
                 app:srcCompat="@drawable/info" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="3dp"
+                android:layout_marginTop="4dp"
                 android:letterSpacing="0.1"
                 android:text="About us"
                 android:textColor="@color/darker"
-                android:textSize="16sp" />
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -295,12 +300,12 @@
             android:layout_below="@+id/other_details"
             android:layout_marginStart="18dp"
             android:layout_marginTop="10dp"
-            android:text="Privacy Policy"
-            android:clickable="true"
             android:background="@drawable/ripple_effect"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Privacy Policy"
             android:textColor="@color/dark"
-            android:textSize="16sp"
-            android:focusable="true" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/terms"
@@ -309,12 +314,12 @@
             android:layout_below="@+id/privacy_policy"
             android:layout_marginStart="18dp"
             android:layout_marginTop="6dp"
-            android:text="Terms and Condition"
-            android:clickable="true"
             android:background="@drawable/ripple_effect"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Terms and Condition"
             android:textColor="@color/dark"
-            android:textSize="16sp"
-            android:focusable="true" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/rate"
@@ -328,7 +333,7 @@
             android:focusable="true"
             android:text="Rate this app on Playstore"
             android:textColor="@color/dark"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/logout"
@@ -342,7 +347,7 @@
             android:focusable="true"
             android:text="Logout"
             android:textColor="@color/dark"
-            android:textSize="18sp" />
+            android:textSize="20sp" />
 
     </RelativeLayout>
 
