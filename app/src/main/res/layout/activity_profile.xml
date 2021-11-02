@@ -31,12 +31,12 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Yashwanth"
+                android:text="Loading..."
                 android:textColor="@color/darker"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -45,14 +45,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/phone_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:text="+919945332922"
+                android:text="Loading..."
                 android:textColor="@color/dark"
                 android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/profile"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                app:layout_constraintTop_toBottomOf="@+id/username" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -87,8 +88,10 @@
             android:background="@drawable/ripple_effect"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="ViewCart"
             android:orientation="horizontal"
-            android:padding="15dp">
+            android:padding="15dp"
+            tools:ignore="UsingOnClickInXml">
 
             <ImageView
                 android:layout_width="20dp"
@@ -345,9 +348,12 @@
             android:background="@drawable/ripple_effect"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="Logout"
             android:text="Logout"
+            android:textStyle="bold"
             android:textColor="@color/dark"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            tools:ignore="OnClick" />
 
     </RelativeLayout>
 

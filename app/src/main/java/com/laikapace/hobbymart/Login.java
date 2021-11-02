@@ -99,6 +99,7 @@ public class Login extends AppCompatActivity {
         if(auth.getCurrentUser() != null){
             // if user exist then redirecting to home activity
             Intent intent = new Intent(Login.this, Home.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
         }

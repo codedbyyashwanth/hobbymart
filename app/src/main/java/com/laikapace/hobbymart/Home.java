@@ -24,13 +24,9 @@ public class Home extends AppCompatActivity {
 
         cartImage = findViewById(R.id.cart);
         cartImgAnime = AnimationUtils.loadAnimation(this, R.anim.icon_anim);
-    }
 
-    public void Logout(View view) {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        auth.signOut();
-        startActivity(new Intent(Home.this, Login.class));
-        finish();
+//        Explore list of best DIY drone kits best DIY drone kits. From Quadcopter DIY Combo Kit, Drone frame Kit,
+//        LiPo Battery, GPS module, Flight controller and BLDC Motors, Remote control we have it all!
     }
 
     public void AddToCart(View view) {
@@ -42,6 +38,13 @@ public class Home extends AppCompatActivity {
 
     public void Profile(View view) {
         Intent intent = new Intent(this, Profile.class);
+        startActivity(intent);
+    }
+
+    public void ViewKit(View view) {
+        String tag = view.getTag().toString();
+        Intent intent = new Intent(this, Kit.class);
+        intent.putExtra("tag",  tag);
         startActivity(intent);
     }
 }

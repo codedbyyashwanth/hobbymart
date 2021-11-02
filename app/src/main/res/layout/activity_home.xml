@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whiter"
+    android:background="#F8F9FA"
     tools:context=".Home">
 
     <RelativeLayout
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/company_name"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="80dp"
             android:text="Shop"
             android:textColor="@color/darkest"
             android:textSize="22sp"
@@ -85,16 +85,17 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            app:cardCornerRadius="8dp"
+            app:cardCornerRadius="20dp"
             android:elevation="10dp"
             android:layout_below="@id/shop_title"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             >
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 >
 
                 <ImageView
@@ -102,26 +103,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/drones" />
+                    android:src="@drawable/dronebit"
+                    />
 
                 <TextView
                     android:id="@+id/drone_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/drone_image"
-                    android:gravity="center"
-                    android:paddingTop="6dp"
+                    android:background="#F4F4F4"
+                    android:paddingStart="16dp"
+                    android:paddingTop="14dp"
+                    android:paddingEnd="16dp"
                     android:text="Hobby Drone Kit"
                     android:textColor="@color/darkest"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/drone_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/drone_title"
-                    android:paddingBottom="5dp"
-                    android:gravity="center">
+                    android:background="#F4F4F4"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/drone_desc"
+                    android:textColor="@color/dark"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/drone_desc"
+                    android:background="#F4F4F4"
+                    android:gravity="center"
+                    android:paddingBottom="5dp">
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="150dp"
@@ -130,8 +147,11 @@
                         android:background="@drawable/outline"
                         android:letterSpacing="0.08"
                         android:text="View Kit"
+                        android:onClick="ViewKit"
+                        android:tag="drone"
                         android:textAllCaps="false"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="OnClick" />
 
                     <Button
                         android:layout_width="150dp"
@@ -144,7 +164,7 @@
 
                 </LinearLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
 
 
@@ -157,16 +177,17 @@
             android:layout_centerHorizontal="true"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            app:cardCornerRadius="8dp"
+            app:cardCornerRadius="20dp"
             android:elevation="10dp"
             android:layout_below="@id/drone_card"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             >
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 >
 
                 <ImageView
@@ -174,25 +195,41 @@
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/planes" />
+                    android:src="@drawable/planesbit"
+                    />
 
                 <TextView
                     android:id="@+id/rc_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/rc_plane_image"
-                    android:gravity="center"
-                    android:paddingTop="6dp"
+                    android:background="#f4f4f4"
+                    android:paddingTop="14dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:text="RC Plane Kit"
                     android:textColor="@color/darkest"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/rc_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/rc_title"
+                    android:background="#F4F4F4"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@string/drone_desc"
+                    android:textColor="@color/dark"
+                    android:textSize="12sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rc_desc"
                     android:paddingBottom="5dp"
+                    android:background="#f4f4f4"
                     android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -201,9 +238,12 @@
                         android:layout_margin="8dp"
                         android:background="@drawable/outline"
                         android:text="View Kit"
+                        android:tag="rcplane"
+                        android:onClick="ViewKit"
                         android:letterSpacing="0.08"
                         android:textAllCaps="false"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:ignore="UsingOnClickInXml" />
 
                     <Button
                         android:layout_width="150dp"
@@ -216,9 +256,7 @@
 
                 </LinearLayout>
 
-            </RelativeLayout>
-
-
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
 
