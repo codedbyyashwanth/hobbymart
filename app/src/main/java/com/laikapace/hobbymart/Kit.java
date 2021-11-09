@@ -3,11 +3,13 @@ package com.laikapace.hobbymart;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,18 +21,32 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class Kit extends AppCompatActivity {
 
+    FirebaseUser user;
+    String phoneNumber;
     RecyclerView recyclerView;
     GridLayoutManager layoutManager;
     FirebaseRecyclerOptions<ProductCardInfo> options;
     FirebaseRecyclerAdapter<ProductCardInfo, CardViewHolder> adapter;
-    DatabaseReference productsReference;
+    DatabaseReference productsReference, cartReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +60,11 @@ public class Kit extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         LoadData(tag);
+
+        user = FirebaseAuth.getInstance().getCurrentUser();
+        assert user != null;
+        phoneNumber = user.getPhoneNumber();
+        cartReference = FirebaseDatabase.getInstance().getReference("Cart");
     }
 
     private void LoadData(String tag) {
@@ -111,9 +132,63 @@ public class Kit extends AppCompatActivity {
                     ProductName.setText(model.getTitle());
 
                     AddToCart.setOnClickListener(v1 -> {
-                        if(true) {
 
-                        }
+                        cartReference.child(phoneNumber).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                boolean dataExist = false;
+                                if(snapshot.getChildrenCount() > 0) {
+                                   for(DataSnapshot data : snapshot.getChildren()) {
+                                       if(Objects.equals(data.child("id").getValue(String.class), model.getId())) {
+                                           dataExist = true;
+                                       }
+                                   }
+
+                                   if(dataExist) {
+                                       Toast.makeText(Kit.this, "This item is already in the cart", Toast.LENGTH_SHORT).show();
+                                   } else {
+                                       HashMap<String, String> hashMap = new HashMap<>();
+                                       hashMap.put("id", model.getId());
+                                       hashMap.put("quantity", String.valueOf(counter[0]));
+                                       cartReference.child(phoneNumber).child(model.getId()).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                           @Override
+                                           public void onSuccess(@NonNull Void unused) {
+                                               dialog.dismiss();
+                                               Snackbar snackbar = Snackbar
+                                                       .make(v, "Item is added to your cart", Snackbar.LENGTH_LONG)
+                                                       .setAction("Go to Cart", view1 -> startActivity(new Intent(Kit.this, Cart.class)));
+                                               snackbar.getView().setBackgroundColor(Color.parseColor("#323232"));
+                                               snackbar.setActionTextColor(Color.parseColor("#FFFFFF"));
+                                               snackbar.setTextColor(Color.parseColor("#F4F9F9"));
+                                               snackbar.show();
+                                           }
+                                       });
+                                   }
+                                } else {
+                                    HashMap<String, String> hashMap = new HashMap<>();
+                                    hashMap.put("id", model.getId());
+                                    hashMap.put("quantity", String.valueOf(counter[0]));
+                                    cartReference.child(phoneNumber).child(model.getId()).setValue(hashMap).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(@NonNull Void unused) {
+                                            dialog.dismiss();
+                                            Snackbar snackbar = Snackbar
+                                                    .make(v, "Item is added to your cart", Snackbar.LENGTH_LONG)
+                                                    .setAction("Go to Cart", view1 -> startActivity(new Intent(Kit.this, Cart.class)));
+                                            snackbar.getView().setBackgroundColor(Color.parseColor("#323232"));
+                                            snackbar.setActionTextColor(Color.parseColor("#FFFFFF"));
+                                            snackbar.setTextColor(Color.parseColor("#F4F9F9"));
+                                            snackbar.show();
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
                     });
 
                     dialog.show();
@@ -139,4 +214,5 @@ public class Kit extends AppCompatActivity {
     public void Cart(View view) {
         startActivity(new Intent(this, Cart.class));
     }
+
 }

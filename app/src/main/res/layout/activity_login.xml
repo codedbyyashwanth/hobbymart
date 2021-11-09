@@ -93,7 +93,6 @@
         android:layout_marginEnd="20dp"
         android:onClick="Signin"
         android:text="Log In"
-        android:background="@drawable/rounded"
         tools:targetApi="lollipop"
         tools:ignore="UsingOnClickInXml" />
 

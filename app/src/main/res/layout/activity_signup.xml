@@ -176,7 +176,6 @@
             android:layout_marginEnd="20dp"
             android:onClick="Register"
             android:text="Register"
-            android:background="@drawable/rounded"
             tools:targetApi="lollipop"
             />
 

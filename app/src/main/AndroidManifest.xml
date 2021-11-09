@@ -14,6 +14,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HobbyMart">
         <activity
+            android:name=".OrderProducts"
+            android:exported="false" />
+        <activity
+            android:name=".Orders"
+            android:exported="false" />
+        <activity
+            android:name=".AddAddress"
+            android:exported="false" />
+        <activity
             android:name=".Kit"
             android:exported="false"
             android:screenOrientation="portrait"

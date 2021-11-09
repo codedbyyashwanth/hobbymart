@@ -159,6 +159,7 @@
                         android:layout_margin="8dp"
                         android:padding="10dp"
                         android:text="Buy Now"
+                        android:onClick="BuyDrone"
                         android:textAllCaps="false"
                         android:textColor="@color/whiter" />
 
@@ -251,6 +252,7 @@
                         android:layout_margin="8dp"
                         android:padding="10dp"
                         android:text="Buy Now"
+                        android:onClick="BuyPlane"
                         android:textAllCaps="false"
                         android:textColor="@color/whiter" />
 

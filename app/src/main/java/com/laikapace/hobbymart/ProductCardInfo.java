@@ -14,6 +14,7 @@ public class ProductCardInfo {
     public ProductCardInfo() {
     }
 
+
     public String getTitle() {
         return title;
     }

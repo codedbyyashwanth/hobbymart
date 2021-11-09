@@ -69,4 +69,12 @@ public class Profile extends AppCompatActivity {
     public void ViewCart(View view) {
         startActivity(new Intent(Profile.this, Cart.class));
     }
+
+    public void EditAddress(View view) {
+        startActivity(new Intent(Profile.this, AddAddress.class));
+    }
+
+    public void Orders(View view) {
+        startActivity(new Intent(Profile.this, Orders.class));
+    }
 }

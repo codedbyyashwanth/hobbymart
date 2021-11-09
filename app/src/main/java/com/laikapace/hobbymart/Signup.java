@@ -346,7 +346,6 @@ public class Signup extends AppCompatActivity {
                 data.put("email", email);
                 data.put("password", encryptedPassword);
                 data.put("phone", phoneNo);
-                dialog.dismiss();
                 dbReference.child("Users").child(phoneNo).setValue(data);
                 Toast.makeText(this, "Registered Successfully", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Signup.this, Home.class);
