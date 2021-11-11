@@ -37,6 +37,8 @@ public class Orders extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerview);
         layoutManager = new LinearLayoutManager(this);
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 

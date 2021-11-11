@@ -469,7 +469,7 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
 
     @Override
     public void onPaymentSuccess(String s, PaymentData paymentData) {
-        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' hh:mm:ss aaa");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' hh:mm aaa");
         String date = format.format(new Date());
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("no", phoneNumber);
