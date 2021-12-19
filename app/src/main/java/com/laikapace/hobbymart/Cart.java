@@ -59,7 +59,7 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
     GridLayoutManager manager;
     FirebaseUser user;
     String phoneNumber;
-    DatabaseReference cartReference, productReference, profileReference, orderReference;
+    DatabaseReference cartReference, productReference, profileReference, orderReference, discountRef;
     FirebaseRecyclerOptions<CartInfo> options;
     FirebaseRecyclerAdapter<CartInfo, CartViewHolder> adapter;
     int PreviewCost = 0, TotalCost = 0, DeliveryCost = 49, Discount = 0;
@@ -71,7 +71,7 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
     EditText CouponCode;
     private String address1, address2, city, state, pincode, email;
     ArrayList<HashMap<String, String>> arrayList;
-    boolean couponApplied = false;
+    boolean couponApplied = false, discount = false;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -110,6 +110,7 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
         assert user != null;
         phoneNumber = user.getPhoneNumber();
 
+        discountRef = FirebaseDatabase.getInstance().getReference("quiz").child("discount").child(phoneNumber);
         cartReference = FirebaseDatabase.getInstance().getReference("Cart").child(phoneNumber);
         profileReference = FirebaseDatabase.getInstance().getReference("Users").child(phoneNumber);
         orderReference = FirebaseDatabase.getInstance().getReference("Orders").child(phoneNumber);
@@ -138,6 +139,42 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
             }
         });
         Checkout.preload(getApplicationContext());
+    }
+
+    private void CheckDiscount() {
+        discountRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("coupon").exists()) {
+                    Discount = (TotalCost * 10) / 100;
+                    if(TotalCost > 1200) {
+                        DiscountView.setText("- ₹ " + Discount);
+                        TotalCost -= Discount;
+                        Toast.makeText(Cart.this, "Total: " + TotalCost + "\nDiscount: " + Discount, Toast.LENGTH_SHORT).show();
+                        TotalPriceView.setText("₹ " + TotalCost);
+                        OrderPrice.setText("₹ " + TotalCost);
+                        CouponCode.setText("WINNER");
+                        CouponCode.setEnabled(false);
+                        TextView msg = findViewById(R.id.applied_msg);
+                        msg.setVisibility(View.VISIBLE);
+                        msg.setText("Coupon Code is Applied");
+                        TextView apply = findViewById(R.id.apply_code);
+                        apply.setTextColor(Color.parseColor("#F4F9F9"));
+                        apply.setEnabled(false);
+                        discount = true;
+                    } else {
+                        Discount = 0;
+                        Toast.makeText(Cart.this, "Order should be above ₹1299", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void checkData() {
@@ -482,6 +519,7 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
             if (task.isSuccessful()) {
                 orderReference.child(s).child("productData").setValue(arrayList);
                 cartReference.removeValue();
+                discountRef.child("coupon").removeValue();
                 Intent intent = new Intent(Cart.this, Orders.class);
                 startActivity(intent);
                 Toast.makeText(Cart.this, "Order Placed", Toast.LENGTH_SHORT).show();

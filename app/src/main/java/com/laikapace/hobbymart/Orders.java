@@ -12,13 +12,18 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Orders extends AppCompatActivity {
 
@@ -29,11 +34,18 @@ public class Orders extends AppCompatActivity {
     FirebaseRecyclerOptions<OrdersData> options;
     FirebaseRecyclerAdapter<OrdersData, OrdersView> adapter;
     DatabaseReference ordersReference;
+    ProgressBar progressBar;
+    RelativeLayout emptyLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders);
+
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
+        emptyLayout = findViewById(R.id.empty_layout);
+        emptyLayout.setVisibility(View.GONE);
 
         recyclerView = findViewById(R.id.recyclerview);
         layoutManager = new LinearLayoutManager(this);
@@ -47,7 +59,25 @@ public class Orders extends AppCompatActivity {
         phoneNumber = user.getPhoneNumber();
 
         ordersReference = FirebaseDatabase.getInstance().getReference("Orders").child(phoneNumber);
-        LoadData();
+        ordersReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    LoadData();
+                    recyclerView.setVisibility(View.VISIBLE);
+                    emptyLayout.setVisibility(View.GONE);
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                    emptyLayout.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void LoadData() {
@@ -75,6 +105,7 @@ public class Orders extends AppCompatActivity {
 
         adapter.startListening();
         recyclerView.setAdapter(adapter);
+        progressBar.setVisibility(View.GONE);
     }
 
     public void Back(View view) {
@@ -83,5 +114,12 @@ public class Orders extends AppCompatActivity {
 
     public void Cart(View view) {
         startActivity(new Intent(Orders.this, Cart.class));
+    }
+
+    public void GotoProduct(View view) {
+        Intent intent = new Intent(Orders.this, Kit.class);
+        intent.putExtra("tag", "drone");
+        startActivity(intent);
+        finish();
     }
 }

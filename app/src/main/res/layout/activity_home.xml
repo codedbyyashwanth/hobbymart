@@ -66,13 +66,61 @@
 
         </LinearLayout>
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/quiz_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/company_name"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:cardCornerRadius="20dp"
+            android:elevation="2dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F8F9FA"
+                android:padding="20dp" >
+
+                <ImageView
+                    android:id="@+id/quiz_icon"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/quiz" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_toEndOf="@id/quiz_icon"
+                    android:letterSpacing="0.03"
+                    android:text="Quiz is Live"
+                    android:textColor="@color/darkest"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="AttendQuiz"
+                    android:text="Attend"
+                    android:textAllCaps="false" />
+
+            </RelativeLayout>
+
+        </androidx.cardview.widget.CardView>
+
         <TextView
             android:id="@+id/shop_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/company_name"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="130dp"
             android:text="Shop"
             android:textColor="@color/darkest"
             android:textSize="22sp"

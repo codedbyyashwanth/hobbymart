@@ -15,14 +15,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -35,7 +39,7 @@ public class Home extends AppCompatActivity {
     Animation cartImgAnime;
     FirebaseUser user;
     String phoneNumber;
-    DatabaseReference droneReference, planeReference, cartReference;
+    DatabaseReference droneReference, cartReference, questionReference;
     BottomSheetDialog sheetDialog;
     View sheetView;
     RadioGroup brushGroup, controllerGroup, batteryGroup, transmitterGroup, frameGroup;
@@ -54,6 +58,7 @@ public class Home extends AppCompatActivity {
 
         droneReference = FirebaseDatabase.getInstance().getReference("drone");
         cartReference = FirebaseDatabase.getInstance().getReference("Cart").child(phoneNumber);
+        questionReference = FirebaseDatabase.getInstance().getReference("quiz").child("completion").child(phoneNumber);
 
         sheetDialog = new BottomSheetDialog(this, R.style.AppBottomSheetDialogTheme);
         sheetDialog.setCanceledOnTouchOutside(false);
@@ -171,5 +176,23 @@ public class Home extends AppCompatActivity {
 
         sheetDialog.setContentView(sheetView);
         sheetDialog.show();
+    }
+
+    public void AttendQuiz(View view) {
+        questionReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Toast.makeText(Home.this, "You have completed the Quiz", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(Home.this, Quiz.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }

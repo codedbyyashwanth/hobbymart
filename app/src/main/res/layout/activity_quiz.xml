@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blueish"
+    tools:context=".Quiz">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:onClick="Back"
+            android:padding="5dp"
+            app:srcCompat="@drawable/back_white"
+            tools:ignore="UsingOnClickInXml" />
+
+        <TextView
+            android:id="@+id/quiz_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quiz Time"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:padding="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/question_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/quiz_title"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="80dp"
+            android:text="Question 1 out of 10"
+            android:textColor="#F3F3F3" />
+
+        <TextView
+            android:id="@+id/question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/question_count"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:letterSpacing="0.04"
+            android:text="Loading..."
+            android:textColor="@color/white"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/question"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/option1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_border_transparent"
+                android:tag="A"
+                android:onClick="OptionSelected"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_margin="5dp"
+                android:text="A. Option"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/option2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@drawable/btn_border_transparent"
+                android:tag="B"
+                android:onClick="OptionSelected"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="B. Option"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/option3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_border_transparent"
+                android:tag="C"
+                android:onClick="OptionSelected"
+                android:layout_margin="5dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="C. Option"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/option4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_border_transparent"
+                android:tag="D"
+                android:onClick="OptionSelected"
+                android:layout_margin="5dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:text="D. Option"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/checkAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:layout_below="@id/linearLayout"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="20dp"
+            android:onClick="CheckAnswer"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="Check Answer"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:text="Next Question"
+            android:onClick="NextQuestion"
+            android:visibility="gone"
+            android:layout_below="@id/checkAnswer"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textAllCaps="false"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            />
+
+    </RelativeLayout>
+
+</ScrollView>

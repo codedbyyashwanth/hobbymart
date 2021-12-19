@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,7 @@ public class Kit extends AppCompatActivity {
     FirebaseRecyclerOptions<ProductCardInfo> options;
     FirebaseRecyclerAdapter<ProductCardInfo, CardViewHolder> adapter;
     DatabaseReference productsReference, cartReference;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +56,13 @@ public class Kit extends AppCompatActivity {
         setContentView(R.layout.activity_kit);
 
         String tag = getIntent().getStringExtra("tag");
+        progressBar = findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.VISIBLE);
         recyclerView = findViewById(R.id.recyclerview);
         layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setVisibility(View.GONE);
 
         LoadData(tag);
 
@@ -205,6 +210,8 @@ public class Kit extends AppCompatActivity {
 
         adapter.startListening();
         recyclerView.setAdapter(adapter);
+        recyclerView.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.GONE);
     }
 
     public void Back(View view) {

@@ -20,7 +20,7 @@ public class Profile extends AppCompatActivity {
 
     FirebaseUser user;
     String phoneNumber;
-    DatabaseReference databaseReference;
+    DatabaseReference databaseReference, quizReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +31,7 @@ public class Profile extends AppCompatActivity {
         assert user != null;
         phoneNumber = user.getPhoneNumber();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
+        quizReference = FirebaseDatabase.getInstance().getReference("quiz");
 
         GetData();
     }
@@ -76,5 +77,13 @@ public class Profile extends AppCompatActivity {
 
     public void Orders(View view) {
         startActivity(new Intent(Profile.this, Orders.class));
+    }
+
+    public void DeleteQuiz(View view) {
+        quizReference.child("completion").child(phoneNumber).removeValue();
+        quizReference.child("discount").child(phoneNumber).removeValue();
+        for (int i = 1; i<=11; i++) {
+            quizReference.child("questions").child(i + "").child("answered").child(phoneNumber).removeValue();
+        }
     }
 }

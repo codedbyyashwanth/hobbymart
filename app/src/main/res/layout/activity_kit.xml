@@ -62,8 +62,15 @@
         android:layout_marginTop="5dp"
         android:overScrollMode="never"
         android:background="@color/white"
+        android:visibility="gone"
         >
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
 
 </LinearLayout>

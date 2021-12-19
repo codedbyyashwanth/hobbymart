@@ -10,4 +10,7 @@
     <color name="light">#EFF8FF</color>
     <color name="orange">#FF8243</color>
     <color name="reddish">#FF2626</color>
+    <color name="blueish">#1089FF</color>
+    <color name="success">#00B227</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>
