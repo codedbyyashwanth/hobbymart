@@ -33,12 +33,12 @@ public class OrderProducts extends AppCompatActivity {
     RecyclerView recyclerView;
     GridLayoutManager manager;
     FirebaseUser user;
-    String phoneNumber, key;
-    DatabaseReference orderReference, profileReference, productReference;
+    String phoneNumber, key, totalCost;
+    DatabaseReference orderReference, profileReference, productReference, statusMessageRef;
     FirebaseRecyclerOptions<CartInfo> options;
     FirebaseRecyclerAdapter<CartInfo, CartViewHolder> adapter;
     int PreviewCost = 0;
-    TextView totalView, addressView;
+    TextView totalView, addressView, deliveryStatusView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +50,7 @@ public class OrderProducts extends AppCompatActivity {
         phoneNumber = user.getPhoneNumber();
 
         key = getIntent().getStringExtra("key");
+        totalCost = getIntent().getStringExtra("totalCost");
 
         recyclerView = findViewById(R.id.recyclerview);
         manager = new GridLayoutManager(this, 1);
@@ -57,9 +58,30 @@ public class OrderProducts extends AppCompatActivity {
 
         totalView = findViewById(R.id.total_price);
         addressView = findViewById(R.id.address);
+        deliveryStatusView = findViewById(R.id.delivery_status);
+
+        statusMessageRef = FirebaseDatabase.getInstance().getReference("Orders").child(phoneNumber).child(key);
 
         LoadData();
         GetAddress();
+
+        StatusData();
+    }
+
+    private void StatusData() {
+        statusMessageRef.child("delivery_message").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    deliveryStatusView.setText(snapshot.getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     private void GetAddress() {
@@ -114,7 +136,7 @@ public class OrderProducts extends AppCompatActivity {
                             holder.CartProductName.setText(name);
                         }
 
-                        totalView.setText("₹ " + PreviewCost);
+                        totalView.setText("₹ " + totalCost);
                     }
 
                     @Override

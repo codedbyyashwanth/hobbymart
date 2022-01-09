@@ -82,7 +82,7 @@ public class Profile extends AppCompatActivity {
     public void DeleteQuiz(View view) {
         quizReference.child("completion").child(phoneNumber).removeValue();
         quizReference.child("discount").child(phoneNumber).removeValue();
-        for (int i = 1; i<=11; i++) {
+        for (int i = 1; i<=12; i++) {
             quizReference.child("questions").child(i + "").child("answered").child(phoneNumber).removeValue();
         }
     }

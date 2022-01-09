@@ -100,6 +100,17 @@ public class Quiz extends AppCompatActivity {
                         option4.setText("D. " + optionD);
                         questionCountView.setText("Question " + index + " out of " + totalQuestions);
                         correctOption = questionsSnapshot.child(index + "").child("answer").getValue(String.class);
+
+                        for (AppCompatButton button : buttons) {
+                            button.setTextColor(getColor(R.color.whitest));
+                            button.setBackgroundResource(R.drawable.btn_border_transparent);
+                        }
+
+                        for (AppCompatButton button: buttons) {
+                            button.setClickable(true);
+                        }
+
+                        checkAnswer.setEnabled(true);
                     }
                 }
             }
@@ -172,16 +183,6 @@ public class Quiz extends AppCompatActivity {
             DisplayQuestions(phoneNumber, questionReference);
         }
 
-        for (AppCompatButton button : buttons) {
-            button.setTextColor(getColor(R.color.whitest));
-            button.setBackgroundResource(R.drawable.btn_border_transparent);
-        }
-
-        for (AppCompatButton button: buttons) {
-            button.setClickable(true);
-        }
-
         view.setVisibility(View.GONE);
-        checkAnswer.setEnabled(true);
     }
 }

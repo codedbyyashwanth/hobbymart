@@ -10,17 +10,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.ArrayMap;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -147,26 +155,45 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("coupon").exists()) {
-                    Discount = (TotalCost * 10) / 100;
-                    if(TotalCost > 1200) {
-                        DiscountView.setText("- ₹ " + Discount);
-                        TotalCost -= Discount;
-                        Toast.makeText(Cart.this, "Total: " + TotalCost + "\nDiscount: " + Discount, Toast.LENGTH_SHORT).show();
-                        TotalPriceView.setText("₹ " + TotalCost);
-                        OrderPrice.setText("₹ " + TotalCost);
-                        CouponCode.setText("WINNER");
-                        CouponCode.setEnabled(false);
-                        TextView msg = findViewById(R.id.applied_msg);
-                        msg.setVisibility(View.VISIBLE);
-                        msg.setText("Coupon Code is Applied");
-                        TextView apply = findViewById(R.id.apply_code);
-                        apply.setTextColor(Color.parseColor("#F4F9F9"));
-                        apply.setEnabled(false);
-                        discount = true;
-                    } else {
-                        Discount = 0;
-                        Toast.makeText(Cart.this, "Order should be above ₹1299", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(Cart.this, "Coupon Applied", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this, R.style.AppBottomSheetDialogTheme);
+                    ViewGroup viewGroup = findViewById(android.R.id.content);
+                    View dialogView = LayoutInflater.from(Cart.this).inflate(R.layout.coupon_view, viewGroup, false);
+                    Button copyToClip = dialogView.findViewById(R.id.copy_to_clip);
+                    builder.setView(dialogView);
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                    copyToClip.setOnClickListener(v -> {
+                        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData clip = ClipData.newPlainText("coupon","WINNER");
+                        clipboard.setPrimaryClip(clip);
+                        alertDialog.dismiss();
+                        Toast.makeText(Cart.this, "Copied to Clipboard!", Toast.LENGTH_SHORT).show();
+                    });
+
+//                    Discount = (TotalCost * 10) / 100;
+//                    if((TotalCost > 1200) && (!couponApplied)) {
+//                        DiscountView.setText("- ₹ " + Discount);
+//                        TotalCost -= Discount;
+//                        Toast.makeText(Cart.this, "Total: " + TotalCost + "\nDiscount: " + Discount, Toast.LENGTH_SHORT).show();
+//                        TotalPriceView.setText("₹ " + TotalCost);
+//                        OrderPrice.setText("₹ " + TotalCost);
+//                        CouponCode.setText("WINNER");
+//                        CouponCode.setEnabled(false);
+//                        TextView msg = findViewById(R.id.applied_msg);
+//                        msg.setVisibility(View.VISIBLE);
+//                        msg.setText("Coupon Code is Applied");
+//                        TextView apply = findViewById(R.id.apply_code);
+//                        apply.setTextColor(Color.parseColor("#F4F9F9"));
+//                        apply.setEnabled(false);
+//                        discount = true;
+//                        couponApplied = true;
+//                    }
+//                    else {
+//                        Discount = 0;
+//                        couponApplied = false;
+//                        Toast.makeText(Cart.this, "Order should be above ₹1299", Toast.LENGTH_SHORT).show();
+//                    }
                 }
             }
 
@@ -320,52 +347,43 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
         addressLayout.setVisibility(View.VISIBLE);
         applyCoupon.setVisibility(View.VISIBLE);
         placeOrder.setEnabled(true);
+        CheckDiscount();
     }
 
     public void Back(View view) {
         finish();
     }
 
+    @SuppressLint("SetTextI18n")
     public void ApplyCode(View view) {
         String code = CouponCode.getText().toString();
-        if(!code.isEmpty()) {
-            DatabaseReference discountRef = FirebaseDatabase.getInstance().getReference("Discount");
+        if (code.equalsIgnoreCase("winner")) {
             discountRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @SuppressLint("SetTextI18n")
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    boolean valid = true;
-                    for (DataSnapshot data: snapshot.getChildren()) {
-                        if(Objects.equals(data.child("code").getValue(String.class), code)) {
-                            Discount = Integer.parseInt(Objects.requireNonNull(data.child("discount").getValue(String.class)));
-                            if(TotalCost > 1200) {
-                                DiscountView.setText("- ₹ " + Discount);
-                                TotalCost -= Discount;
-                                TotalPriceView.setText("₹ " + TotalCost);
-                                OrderPrice.setText("₹ " + TotalCost);
-                                CouponCode.setEnabled(false);
-                                view.setEnabled(false);
-                                TextView msg = findViewById(R.id.applied_msg);
-                                TextView apply = findViewById(R.id.apply_code);
-                                apply.setTextColor(Color.parseColor("#F4F9F9"));
-                                msg.setVisibility(View.VISIBLE);
-                                couponApplied = true;
-                            } else {
-                                Discount = 0;
-                                CouponCode.setText("");
-                                couponApplied = false;
-                                Toast.makeText(Cart.this, "Order should be above ₹1299", Toast.LENGTH_SHORT).show();
-                            }
-                            valid = true;
-                            break;
-                        } else {
-                            valid = false;
+                    if (snapshot.exists()) {
+                        int WinnerCoupon = (TotalCost*10)/100;
+                        if(TotalCost > 1200) {
+                            DiscountView.setText("- ₹ " + WinnerCoupon);
+                            TotalCost -= WinnerCoupon;
+                            TotalPriceView.setText("₹ " + TotalCost);
+                            OrderPrice.setText("₹ " + TotalCost);
+                            CouponCode.setEnabled(false);
+                            view.setEnabled(false);
+                            TextView msg = findViewById(R.id.applied_msg);
+                            TextView apply = findViewById(R.id.apply_code);
+                            apply.setTextColor(Color.parseColor("#F4F9F9"));
+                            msg.setVisibility(View.VISIBLE);
+                            couponApplied = true;
                         }
-                    }
-
-                    if(!valid) {
-                        CouponCode.setText("");
-                        Toast.makeText(Cart.this, "Enter Valid Code", Toast.LENGTH_SHORT).show();
+                        else {
+                            Discount = 0;
+                            CouponCode.setText("");
+                            couponApplied = false;
+                            Toast.makeText(Cart.this, "Order should be above ₹1299", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(Cart.this, "Code is not applicable", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -375,7 +393,55 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
                 }
             });
         } else {
-            Toast.makeText(this, "Enter Valid Code", Toast.LENGTH_SHORT).show();
+            if(!code.isEmpty()) {
+                DatabaseReference discountRef = FirebaseDatabase.getInstance().getReference("Discount");
+                discountRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        boolean valid = true;
+                        for (DataSnapshot data : snapshot.getChildren()) {
+                            if (Objects.equals(data.child("code").getValue(String.class), code)) {
+                                Discount = Integer.parseInt(Objects.requireNonNull(data.child("discount").getValue(String.class)));
+                                if(TotalCost > 1200) {
+                                    DiscountView.setText("- ₹ " + Discount);
+                                    TotalCost -= Discount;
+                                    TotalPriceView.setText("₹ " + TotalCost);
+                                    OrderPrice.setText("₹ " + TotalCost);
+                                    CouponCode.setEnabled(false);
+                                    view.setEnabled(false);
+                                    TextView msg = findViewById(R.id.applied_msg);
+                                    TextView apply = findViewById(R.id.apply_code);
+                                    apply.setTextColor(Color.parseColor("#F4F9F9"));
+                                    msg.setVisibility(View.VISIBLE);
+                                    couponApplied = true;
+                                }
+                                else {
+                                    Discount = 0;
+                                    CouponCode.setText("");
+                                    couponApplied = false;
+                                    Toast.makeText(Cart.this, "Order should be above ₹1299", Toast.LENGTH_SHORT).show();
+                                }
+                                valid = true;
+                                break;
+                            } else {
+                                valid = false;
+                            }
+                        }
+                        if(!valid) {
+                            CouponCode.setText("");
+                            Toast.makeText(Cart.this, "Enter Valid Code", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            } else {
+                Toast.makeText(this, "Enter Valid Code", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -513,6 +579,7 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
         hashMap.put("payment", "success");
         hashMap.put("totalCost", String.valueOf(TotalCost));
         hashMap.put("paymentID", s);
+        hashMap.put("delivery_message", "Your order is in progress");
         hashMap.put("date", date);
         hashMap.put("coupon", String.valueOf(couponApplied));
         orderReference.child(s).setValue(hashMap).addOnCompleteListener(task -> {

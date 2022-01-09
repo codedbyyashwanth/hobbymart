@@ -20,6 +20,10 @@
         <item name="bottomSheetStyle">@style/BottomSheetDialog</item>
     </style>
 
+    <style name="Something" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowBackground">@drawable/circular_shape</item>
+    </style>
+
     <style name="BottomSheetDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
         <item name="android:background">@drawable/circular_shape</item>
     </style>

@@ -32,6 +32,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Home extends AppCompatActivity {
 
@@ -39,9 +40,10 @@ public class Home extends AppCompatActivity {
     Animation cartImgAnime;
     FirebaseUser user;
     String phoneNumber;
-    DatabaseReference droneReference, cartReference, questionReference;
+    DatabaseReference droneReference, cartReference, questionReference, quizRef;
     BottomSheetDialog sheetDialog;
     View sheetView;
+    CardView quizView;
     RadioGroup brushGroup, controllerGroup, batteryGroup, transmitterGroup, frameGroup;
 
     @Override
@@ -50,6 +52,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         cartImage = findViewById(R.id.cart);
+        quizView = findViewById(R.id.quiz_card);
         cartImgAnime = AnimationUtils.loadAnimation(this, R.anim.icon_anim);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -57,12 +60,32 @@ public class Home extends AppCompatActivity {
         phoneNumber = user.getPhoneNumber();
 
         droneReference = FirebaseDatabase.getInstance().getReference("drone");
+        quizRef = FirebaseDatabase.getInstance().getReference("quiz");
         cartReference = FirebaseDatabase.getInstance().getReference("Cart").child(phoneNumber);
         questionReference = FirebaseDatabase.getInstance().getReference("quiz").child("completion").child(phoneNumber);
 
         sheetDialog = new BottomSheetDialog(this, R.style.AppBottomSheetDialogTheme);
         sheetDialog.setCanceledOnTouchOutside(false);
         sheetDialog.setCancelable(false);
+        checkQuiz();
+    }
+
+    private void checkQuiz() {
+        quizRef.child("started").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (Objects.requireNonNull(snapshot.getValue(String.class)).equalsIgnoreCase("yes")) {
+                    quizView.setVisibility(View.VISIBLE);
+                } else {
+                    quizView.setVisibility(View.INVISIBLE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void AddToCart(View view) {

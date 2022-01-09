@@ -88,6 +88,24 @@ public class Kit extends AppCompatActivity {
                 holder.ProductPrice.setText("₹" + model.getPrice());
                 Picasso.get().load(model.getUrl()).into(holder.ProductImage);
 
+                holder.ProductImage.setOnClickListener(v -> {
+                    Intent intent = new Intent(Kit.this, ProductData.class);
+                    intent.putExtra("id", model.getId());
+                    intent.putExtra("url", model.getUrl());
+                    intent.putExtra("tag", tag);
+                    intent.putExtra("no", phoneNumber);
+                    startActivity(intent);
+                });
+
+                holder.ProductName.setOnClickListener(v -> {
+                    Intent intent = new Intent(Kit.this, ProductData.class);
+                    intent.putExtra("id", model.getId());
+                    intent.putExtra("url", model.getUrl());
+                    intent.putExtra("tag", tag);
+                    intent.putExtra("no", phoneNumber);
+                    startActivity(intent);
+                });
+
                 holder.AddToCart.setOnClickListener(v -> {
                     BottomSheetDialog dialog = new BottomSheetDialog(Kit.this, R.style.AppBottomSheetDialogTheme);
                     View view = getLayoutInflater().inflate(R.layout.quantity_selector, null);
@@ -129,7 +147,7 @@ public class Kit extends AppCompatActivity {
                     });
 
                     Close.setOnClickListener(v4 -> dialog.dismiss() );
-                    Description.setText(model.getDescription());
+//                    Description.setText(model.getDescription());
 
                     Picasso.get().load(model.getUrl()).into(ProductImage);
                     ProductPrice.setText("₹" + model.getPrice());
@@ -137,7 +155,6 @@ public class Kit extends AppCompatActivity {
                     ProductName.setText(model.getTitle());
 
                     AddToCart.setOnClickListener(v1 -> {
-
                         cartReference.child(phoneNumber).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {

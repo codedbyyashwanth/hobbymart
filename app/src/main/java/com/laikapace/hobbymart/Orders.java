@@ -91,6 +91,7 @@ public class Orders extends AppCompatActivity {
                 holder.forward.setOnClickListener(clickView -> {
                     Intent intent = new Intent(Orders.this, OrderProducts.class);
                     intent.putExtra("key", model.getPaymentID());
+                    intent.putExtra("totalCost", model.getTotalCost());
                     startActivity(intent);
                 });
             }
