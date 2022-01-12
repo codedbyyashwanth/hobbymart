@@ -86,4 +86,8 @@ public class Profile extends AppCompatActivity {
             quizReference.child("questions").child(i + "").child("answered").child(phoneNumber).removeValue();
         }
     }
+
+    public void AboutUs(View view) {
+        startActivity(new Intent(Profile.this, AboutUs.class));
+    }
 }

@@ -256,6 +256,7 @@
             android:background="@drawable/ripple_effect"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="AboutUs"
             android:orientation="horizontal"
             android:padding="15dp">
 

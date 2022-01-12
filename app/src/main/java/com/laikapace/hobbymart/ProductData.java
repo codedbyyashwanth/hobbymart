@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,15 +28,17 @@ import java.util.Objects;
 
 public class ProductData extends AppCompatActivity {
 
-    String id, pUrl, tag, phoneNumber, ProductName, ProductPrice;
+    String id, pUrl, tag, phoneNumber, ProductName, ProductPrice, Stock;
     DatabaseReference reference, cartReference;
     ArrayList<MultipleImageData> sliderDataArrayList;
+    Button AddToCart;
     SliderView sliderView;
     MultipleImageAdapter adapter;
     CardView Add, Remove;
     int counter = 1;
     TextView ProductNameView, ProductPriceView, ProductDescView, ProductQuantity;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,7 @@ public class ProductData extends AppCompatActivity {
         pUrl = getIntent().getStringExtra("url");
         tag = getIntent().getStringExtra("tag");
         phoneNumber = getIntent().getStringExtra("no");
+        Stock = getIntent().getStringExtra("stock");
 
         reference = FirebaseDatabase.getInstance().getReference(tag);
         cartReference = FirebaseDatabase.getInstance().getReference("Cart");
@@ -54,10 +58,19 @@ public class ProductData extends AppCompatActivity {
         ProductNameView = findViewById(R.id.product_title);
         ProductPriceView = findViewById(R.id.product_price);
         ProductDescView = findViewById(R.id.product_desc);
+        AddToCart = findViewById(R.id.add_to_cart);
 
         Add = findViewById(R.id.more);
         Remove = findViewById(R.id.less);
         ProductQuantity = findViewById(R.id.product_quantity);
+
+        if (Stock.equalsIgnoreCase("yes")) {
+            AddToCart.setText("Add to Cart");
+            AddToCart.setEnabled(true);
+        } else {
+            AddToCart.setText("Out of Stock");
+            AddToCart.setEnabled(false);
+        }
 
         GetData(id);
         
@@ -78,6 +91,7 @@ public class ProductData extends AppCompatActivity {
                 Toast.makeText(ProductData.this, "Minimum Quantity is 1", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
     public void Back(View view) {

@@ -155,7 +155,6 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("coupon").exists()) {
-                    Toast.makeText(Cart.this, "Coupon Applied", Toast.LENGTH_SHORT).show();
                     AlertDialog.Builder builder = new AlertDialog.Builder(Cart.this, R.style.AppBottomSheetDialogTheme);
                     ViewGroup viewGroup = findViewById(android.R.id.content);
                     View dialogView = LayoutInflater.from(Cart.this).inflate(R.layout.coupon_view, viewGroup, false);

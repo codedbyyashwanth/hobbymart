@@ -94,6 +94,7 @@ public class Kit extends AppCompatActivity {
                     intent.putExtra("url", model.getUrl());
                     intent.putExtra("tag", tag);
                     intent.putExtra("no", phoneNumber);
+                    intent.putExtra("stock", model.getStock());
                     startActivity(intent);
                 });
 
@@ -103,6 +104,7 @@ public class Kit extends AppCompatActivity {
                     intent.putExtra("url", model.getUrl());
                     intent.putExtra("tag", tag);
                     intent.putExtra("no", phoneNumber);
+                    intent.putExtra("stock", model.getStock());
                     startActivity(intent);
                 });
 
@@ -118,6 +120,7 @@ public class Kit extends AppCompatActivity {
                     CardView Add, Remove, Close;
                     TextView ProductPrice, ProductQuantity, ProductName, Description;
                     Button AddToCart = view.findViewById(R.id.add_to_cart);
+                    Button ViewDetails = view.findViewById(R.id.view_details);
 
                     Add = view.findViewById(R.id.more);
                     Remove = view.findViewById(R.id.less);
@@ -132,7 +135,7 @@ public class Kit extends AppCompatActivity {
                         counter[0]++;
                         ProductQuantity.setText(counter[0] + "");
                         int newPrice = counter[0] * Integer.parseInt(model.getPrice());
-                        ProductPrice.setText("₹" + newPrice);
+                        ProductPrice.setText("Cost: ₹" + newPrice);
                     });
 
                     Remove.setOnClickListener(v3 -> {
@@ -140,7 +143,7 @@ public class Kit extends AppCompatActivity {
                             counter[0]--;
                             ProductQuantity.setText(counter[0] + "");
                             int newPrice = counter[0] * Integer.parseInt(model.getPrice());
-                            ProductPrice.setText("₹" + newPrice);
+                            ProductPrice.setText("Cost: ₹" + newPrice);
                         } else {
                             Toast.makeText(Kit.this, "Minimum Quantity is 1", Toast.LENGTH_SHORT).show();
                         }
@@ -150,9 +153,27 @@ public class Kit extends AppCompatActivity {
 //                    Description.setText(model.getDescription());
 
                     Picasso.get().load(model.getUrl()).into(ProductImage);
-                    ProductPrice.setText("₹" + model.getPrice());
+                    ProductPrice.setText("Cost: ₹" + model.getPrice());
                     ProductQuantity.setText("1");
                     ProductName.setText(model.getTitle());
+
+                    if (model.getStock().equalsIgnoreCase("yes")) {
+                        AddToCart.setText("Add to Cart");
+                        AddToCart.setEnabled(true);
+                    } else {
+                        AddToCart.setText("Out of Stock");
+                        AddToCart.setEnabled(false);
+                    }
+
+                    ViewDetails.setOnClickListener(v12 -> {
+                        Intent intent = new Intent(Kit.this, ProductData.class);
+                        intent.putExtra("id", model.getId());
+                        intent.putExtra("url", model.getUrl());
+                        intent.putExtra("tag", tag);
+                        intent.putExtra("no", phoneNumber);
+                        intent.putExtra("stock", model.getStock());
+                        startActivity(intent);
+                    });
 
                     AddToCart.setOnClickListener(v1 -> {
                         cartReference.child(phoneNumber).addListenerForSingleValueEvent(new ValueEventListener() {
