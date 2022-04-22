@@ -290,10 +290,84 @@
             android:background="#EBEBEB" />
 
         <TextView
-            android:id="@+id/other_details"
+            android:id="@+id/social_details"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/b_6"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="25dp"
+            android:text="Social Media"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/instagram"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/social_details"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/ripple_effect"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="InstagramView"
+            android:text="Instagram"
+            android:textColor="@color/dark"
+            android:textSize="14sp"
+            tools:ignore="OnClick,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/linkedin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/instagram"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/ripple_effect"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="LinkedinView"
+            android:text="Linkedin"
+            android:textColor="@color/dark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/Facebook"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linkedin"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/ripple_effect"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="FacebookView"
+            android:text="Facebook"
+            android:textColor="@color/dark"
+            android:textSize="14sp"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/Website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Facebook"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/ripple_effect"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="WebsiteView"
+            android:text="Official Website"
+            android:textColor="@color/dark"
+            android:textSize="14sp"
+            tools:ignore="OnClick,TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/other_details"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Website"
             android:layout_marginStart="18dp"
             android:layout_marginTop="25dp"
             android:text="Other Details"
@@ -310,10 +384,11 @@
             android:background="@drawable/ripple_effect"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="Privacy"
             android:text="Privacy Policy"
             android:textColor="@color/dark"
             android:textSize="14sp"
-            tools:ignore="TouchTargetSizeCheck" />
+            tools:ignore="OnClick,TouchTargetSizeCheck" />
 
         <TextView
             android:id="@+id/terms"
@@ -324,6 +399,7 @@
             android:layout_marginTop="6dp"
             android:background="@drawable/ripple_effect"
             android:clickable="true"
+            android:onClick="Terms"
             android:focusable="true"
             android:text="Terms and Condition"
             android:textColor="@color/dark"
@@ -339,7 +415,8 @@
             android:background="@drawable/ripple_effect"
             android:clickable="true"
             android:focusable="true"
-            android:text="Rate this app on Playstore"
+            android:onClick="Shipping"
+            android:text="Shipping and Refund Policy"
             android:textColor="@color/dark"
             android:textSize="14sp"
             tools:ignore="TouchTargetSizeCheck" />

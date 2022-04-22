@@ -5,7 +5,6 @@ import static android.content.ContentValues.TAG;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -16,19 +15,14 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.util.ArrayMap;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,8 +30,6 @@ import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,7 +38,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentData;
@@ -77,9 +68,12 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
     TextView applyCoupon;
     Button placeOrder, Goto;
     EditText CouponCode;
+    int total;
     private String address1, address2, city, state, pincode, email;
     ArrayList<HashMap<String, String>> arrayList;
-    boolean couponApplied = false, discount = false;
+    boolean couponApplied = false, isPlane = false;
+    int couponCost = 0;
+    String planePrice;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -169,30 +163,6 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
                         alertDialog.dismiss();
                         Toast.makeText(Cart.this, "Copied to Clipboard!", Toast.LENGTH_SHORT).show();
                     });
-
-//                    Discount = (TotalCost * 10) / 100;
-//                    if((TotalCost > 1200) && (!couponApplied)) {
-//                        DiscountView.setText("- ₹ " + Discount);
-//                        TotalCost -= Discount;
-//                        Toast.makeText(Cart.this, "Total: " + TotalCost + "\nDiscount: " + Discount, Toast.LENGTH_SHORT).show();
-//                        TotalPriceView.setText("₹ " + TotalCost);
-//                        OrderPrice.setText("₹ " + TotalCost);
-//                        CouponCode.setText("WINNER");
-//                        CouponCode.setEnabled(false);
-//                        TextView msg = findViewById(R.id.applied_msg);
-//                        msg.setVisibility(View.VISIBLE);
-//                        msg.setText("Coupon Code is Applied");
-//                        TextView apply = findViewById(R.id.apply_code);
-//                        apply.setTextColor(Color.parseColor("#F4F9F9"));
-//                        apply.setEnabled(false);
-//                        discount = true;
-//                        couponApplied = true;
-//                    }
-//                    else {
-//                        Discount = 0;
-//                        couponApplied = false;
-//                        Toast.makeText(Cart.this, "Order should be above ₹1299", Toast.LENGTH_SHORT).show();
-//                    }
                 }
             }
 
@@ -228,13 +198,14 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
 
     @SuppressLint("SetTextI18n")
     private void GetData() {
-        productReference = FirebaseDatabase.getInstance().getReference("Products");
+        productReference = FirebaseDatabase.getInstance().getReference("AllProducts");
         options = new FirebaseRecyclerOptions.Builder<CartInfo>().setQuery(cartReference, CartInfo.class).build();
         adapter = new FirebaseRecyclerAdapter<CartInfo, CartViewHolder>(options) {
             @SuppressLint("SetTextI18n")
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder holder, @SuppressLint("RecyclerView") int position, @NonNull CartInfo model) {
                 String id = model.getId();
+                planePrice = model.getPrice();
 
                 productReference.child(id).addValueEventListener(new ValueEventListener() {
                     @Override
@@ -247,10 +218,19 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
                         HashMap<String, String> hashMap = new HashMap<>();
                         hashMap.put("id", id);
                         hashMap.put("quantity", model.getQuantity());
+
+
+                        if (price == null) {
+                            price = planePrice;
+                            hashMap.put("price", planePrice);
+                            holder.CartProductImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        }
+
+
                         arrayList.add(hashMap);
 
                         assert price != null;
-                        int total = Integer.parseInt(price) * Integer.parseInt(model.getQuantity());
+                        total = Integer.parseInt(price) * Integer.parseInt(model.getQuantity());
                         PreviewCost += total;
 
                         holder.CartProductPrice.setText("₹ " + total);
@@ -374,6 +354,7 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
                             apply.setTextColor(Color.parseColor("#F4F9F9"));
                             msg.setVisibility(View.VISIBLE);
                             couponApplied = true;
+                            couponCost += WinnerCoupon;
                         }
                         else {
                             Discount = 0;
@@ -414,6 +395,7 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
                                     apply.setTextColor(Color.parseColor("#F4F9F9"));
                                     msg.setVisibility(View.VISIBLE);
                                     couponApplied = true;
+                                    couponCost += Discount;
                                 }
                                 else {
                                     Discount = 0;
@@ -452,7 +434,7 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
                     startPayment();
                 } else {
                     BottomSheetDialog dialog = new BottomSheetDialog(Cart.this, R.style.AppBottomSheetDialogTheme);
-                    View view = getLayoutInflater().inflate(R.layout.address_view, null);
+                    @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.address_view, null);
 
                     TextInputLayout AddressLayout1, AddressLayout2,  CityLayout, StateLayout, PincodeLayout;
                     Button saveAddress = view.findViewById(R.id.save_address);
@@ -541,7 +523,9 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
 
     public void startPayment() {
         Checkout checkout = new Checkout();
-        checkout.setKeyID("rzp_test_lwrLe85hfjCIWm");
+//        checkout.setKeyID("rzp_test_lwrLe85hfjCIWm");
+        checkout.setKeyID("rzp_test_SdTv74gXcEQ3K0");
+
         checkout.setImage(R.drawable.logo);
         final Activity activity = this;
         try {
@@ -578,9 +562,10 @@ public class Cart extends AppCompatActivity implements PaymentResultWithDataList
         hashMap.put("payment", "success");
         hashMap.put("totalCost", String.valueOf(TotalCost));
         hashMap.put("paymentID", s);
+        hashMap.put("fulfilled", "false");
         hashMap.put("delivery_message", "Your order is in progress");
         hashMap.put("date", date);
-        hashMap.put("coupon", String.valueOf(couponApplied));
+        hashMap.put("coupon", String.valueOf(couponCost));
         orderReference.child(s).setValue(hashMap).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 orderReference.child(s).child("productData").setValue(arrayList);

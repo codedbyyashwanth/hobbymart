@@ -3,9 +3,12 @@ package com.laikapace.hobbymart;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -89,5 +92,48 @@ public class Profile extends AppCompatActivity {
 
     public void AboutUs(View view) {
         startActivity(new Intent(Profile.this, AboutUs.class));
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    public void Privacy(View view) {
+        Intent intent = new Intent(this, PDFView.class);
+        intent.putExtra("url", "https://firebasestorage.googleapis.com/v0/b/laikapace.appspot.com/o/Privacy%20Policy-converted.pdf?alt=media&token=ca298856-5c4e-48ea-a675-87185f1842f1");
+        startActivity(intent);
+    }
+
+    public void FacebookView(View view) {
+        Intent intent = new Intent(this, SocialPage.class);
+        intent.putExtra("url", "https://www.facebook.com/laikapace/");
+        startActivity(intent);
+    }
+
+    public void LinkedinView(View view) {
+        Intent intent = new Intent(this, SocialPage.class);
+        intent.putExtra("url", "https://www.linkedin.com/company/laikapace/");
+        startActivity(intent);
+    }
+
+    public void InstagramView(View view) {
+        Intent intent = new Intent(this, SocialPage.class);
+        intent.putExtra("url", "https://www.instagram.com/laikapace/");
+        startActivity(intent);
+    }
+
+    public void WebsiteView(View view) {
+        Intent intent = new Intent(this, SocialPage.class);
+        intent.putExtra("url", "https://laikapace.tech/");
+        startActivity(intent);
+    }
+
+    public void Terms(View view) {
+        Intent intent = new Intent(this, PDFView.class);
+        intent.putExtra("url", "https://firebasestorage.googleapis.com/v0/b/laikapace.appspot.com/o/Terms%20and%20Conditions-converted.pdf?alt=media&token=d1dd7857-6695-4e16-8959-2b7ec0915744");
+        startActivity(intent);
+    }
+
+    public void Shipping(View view) {
+        Intent intent = new Intent(this, PDFView.class);
+        intent.putExtra("url", "https://firebasestorage.googleapis.com/v0/b/laikapace.appspot.com/o/Shipping%20and%20Refund%20Policy-converted.pdf?alt=media&token=c658d18b-c5f4-424c-a7f4-508833e9a7ff");
+        startActivity(intent);
     }
 }

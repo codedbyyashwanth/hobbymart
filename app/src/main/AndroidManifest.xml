@@ -12,7 +12,23 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.HobbyMart">
+        android:theme="@style/Theme.HobbyMart"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".PDFView"
+            android:exported="false" />
+        <activity
+            android:name=".SocialPage"
+            android:exported="false" />
+        <activity
+            android:name=".PlaneData"
+            android:exported="false" />
+        <activity
+            android:name=".Plane"
+            android:exported="false" />
+        <activity
+            android:name=".DocumentView"
+            android:exported="false" />
         <activity
             android:name=".AboutUs"
             android:exported="false" />

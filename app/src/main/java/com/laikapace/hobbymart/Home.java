@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -103,6 +104,7 @@ public class Home extends AppCompatActivity {
         startActivity(intent);
     }
 
+   @SuppressLint("InflateParams")
    public void BuyDrone(View view) {
        String[] c = new String[] {"21012021003", "21012021007", "21012021014", "21012021015"};
        ArrayList<String> ids = new ArrayList<>(Arrays.asList(c));
@@ -116,9 +118,7 @@ public class Home extends AppCompatActivity {
        Button done = sheetView.findViewById(R.id.done);
        CardView close = sheetView.findViewById(R.id.close);
 
-       close.setOnClickListener(v -> {
-           sheetDialog.dismiss();
-       });
+       close.setOnClickListener(v -> sheetDialog.dismiss());
 
        done.setOnClickListener(doneView -> {
            if (brushGroup.getCheckedRadioButtonId() != -1 && controllerGroup.getCheckedRadioButtonId() != -1 && batteryGroup.getCheckedRadioButtonId() != -1 && transmitterGroup.getCheckedRadioButtonId() != -1 && frameGroup.getCheckedRadioButtonId() != -1) {
@@ -160,6 +160,7 @@ public class Home extends AppCompatActivity {
        sheetDialog.show();
     }
 
+    @SuppressLint("InflateParams")
     public void BuyPlane(View view) {
         String[] c= new String[]  { "21012021003", "21012021007", "21012021016" };
         ArrayList<String> ids = new ArrayList<>(Arrays.asList(c));
@@ -171,9 +172,7 @@ public class Home extends AppCompatActivity {
         Button done = sheetView.findViewById(R.id.done);
         CardView close = sheetView.findViewById(R.id.close);
 
-        close.setOnClickListener(v -> {
-            sheetDialog.dismiss();
-        });
+        close.setOnClickListener(v -> sheetDialog.dismiss());
 
         done.setOnClickListener(doneView -> {
             if (brushGroup.getCheckedRadioButtonId() != -1 && batteryGroup.getCheckedRadioButtonId() != -1 && transmitterGroup.getCheckedRadioButtonId() != -1) {
@@ -222,5 +221,10 @@ public class Home extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void ViewAll(View view) {
+        Intent intent = new Intent(Home.this, Plane.class);
+        startActivity(intent);
     }
 }

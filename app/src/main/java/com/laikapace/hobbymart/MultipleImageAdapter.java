@@ -32,7 +32,9 @@ public class MultipleImageAdapter  extends SliderViewAdapter<MultipleImageAdapte
     @Override
     public void onBindViewHolder(MultipleImageViewHolder viewHolder, final int position) {
         final MultipleImageData item = multipleImageData.get(position);
-        Picasso.get().load(item.getImgUrl()).into(viewHolder.imageViewBackground);
+        if (!item.getImgUrl().isEmpty()) {
+            Picasso.get().load(item.getImgUrl()).into(viewHolder.imageViewBackground);
+        }
     }
 
 

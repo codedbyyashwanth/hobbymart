@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -103,12 +104,13 @@ public class OrderProducts extends AppCompatActivity {
 
     private void LoadData() {
         orderReference = FirebaseDatabase.getInstance().getReference("Orders").child(phoneNumber).child(key).child("productData");
-        productReference = FirebaseDatabase.getInstance().getReference("Products");
+        productReference = FirebaseDatabase.getInstance().getReference("AllProducts");
         options = new FirebaseRecyclerOptions.Builder<CartInfo>().setQuery(orderReference, CartInfo.class).build();
         adapter = new FirebaseRecyclerAdapter<CartInfo, CartViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull CartViewHolder holder, int position, @NonNull CartInfo model) {
                 String id = model.getId();
+                String planePrice = model.getPrice();
 
                 productReference.child(id).addValueEventListener(new ValueEventListener() {
                     @SuppressLint("SetTextI18n")
@@ -120,7 +122,11 @@ public class OrderProducts extends AppCompatActivity {
                         url = snapshot.child("url").getValue(String.class);
 
 
-                        assert price != null;
+                        if (price == null) {
+                            price = planePrice;
+                            holder.CartProductImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
+                        }
+
                         int total = Integer.parseInt(price) * Integer.parseInt(model.getQuantity());
                         PreviewCost += total;
 

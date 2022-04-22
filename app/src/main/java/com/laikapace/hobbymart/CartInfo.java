@@ -1,7 +1,7 @@
 package com.laikapace.hobbymart;
 
 public class CartInfo {
-     String id, quantity;
+     String id, quantity, price;
 
     public CartInfo(String id, String quantity) {
         this.id = id;
@@ -9,6 +9,10 @@ public class CartInfo {
     }
 
     public CartInfo() {
+    }
+
+    public String getPrice() {
+        return price;
     }
 
     public String getId() {

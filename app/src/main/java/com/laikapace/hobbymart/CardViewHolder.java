@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CardViewHolder extends RecyclerView.ViewHolder {
     ImageView ProductImage;
     CardView AddToCart;
-    TextView ProductName, ProductPrice;
+    TextView ProductName, ProductPrice, ProductDesc;
 
     public CardViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -20,5 +20,10 @@ public class CardViewHolder extends RecyclerView.ViewHolder {
         ProductName = itemView.findViewById(R.id.product_name);
         ProductPrice = itemView.findViewById(R.id.product_price);
         AddToCart = itemView.findViewById(R.id.add_to_cart);
+        try {
+            ProductDesc = itemView.findViewById(R.id.product_desc);
+        } catch (Exception e) {
+            // Do Nothing
+        }
     }
 }

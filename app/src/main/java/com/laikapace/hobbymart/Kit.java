@@ -3,7 +3,6 @@ package com.laikapace.hobbymart;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,8 +33,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -110,7 +107,7 @@ public class Kit extends AppCompatActivity {
 
                 holder.AddToCart.setOnClickListener(v -> {
                     BottomSheetDialog dialog = new BottomSheetDialog(Kit.this, R.style.AppBottomSheetDialogTheme);
-                    View view = getLayoutInflater().inflate(R.layout.quantity_selector, null);
+                    @SuppressLint("InflateParams") View view = getLayoutInflater().inflate(R.layout.quantity_selector, null);
                     dialog.setCanceledOnTouchOutside(false);
                     dialog.setContentView(view);
 
