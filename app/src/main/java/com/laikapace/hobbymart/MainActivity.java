@@ -11,28 +11,28 @@ import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+                super.onCreate(savedInstanceState);
+                setContentView(R.layout.activity_main);
 
-        ImageView logo = findViewById(R.id.logo);
+                ImageView logo = findViewById(R.id.logo);
 
-        Animation animation = AnimationUtils.loadAnimation(this, R.anim.logo_anim);
-        logo.startAnimation(animation);
+                Animation animation = AnimationUtils.loadAnimation(this, R.anim.logo_anim);
+                logo.startAnimation(animation);
 
-        new CountDownTimer(4000, 1000) {
+                new CountDownTimer(4000, 1000) {
 
-            @Override
-            public void onTick(long millisUntilFinished) {
-                // Nothing Todo
-            }
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                                // Nothing Todo
+                        }
 
-            @Override
-            public void onFinish() {
-                startActivity(new Intent(MainActivity.this, Login.class));
-                finish();
-            }
-        }.start();
-    }
+                        @Override
+                        public void onFinish() {
+                                startActivity(new Intent(MainActivity.this, Login.class));
+                                finish();
+                        }
+                }.start();
+        }
 }
